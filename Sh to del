@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Define the paths where log files are located
+paths=(
+    "/var/log/path1"
+    "/var/log/path2"
+    "/var/log/path3"
+    "/var/log/path4"
+    "/var/log/path5"
+)
+
+# Number of days to keep log files
+days_to_keep=30
+
+# Loop through each path and delete old log files
+for path in "${paths[@]}"; do
+    if [ -d "$path" ]; then
+        find "$path" -type f -name "*.log" -mtime +$days_to_keep -exec rm -f {} \;
+        echo "Deleted log files older than $days_to_keep days in $path"
+    else
+        echo "Directory $path does not exist"
+    fi
+done
